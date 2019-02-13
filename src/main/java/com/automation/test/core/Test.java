@@ -1,4 +1,4 @@
-package com.mkyong.test.core;
+package com.automaion.test.core;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,10 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD) //can use in method only.
+@Target(ElementType.METHOD)
 public @interface Test {
-	
-	//should ignore this test?
-	public boolean enabled() default true;
-	
+
+    boolean enabled() default true;
 }

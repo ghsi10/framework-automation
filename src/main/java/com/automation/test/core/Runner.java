@@ -1,36 +1,31 @@
-package com.mkyong.test;
+package com.automaion.test.core;
+
+import com.automaion.test.App;
+import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import com.mkyong.test.core.Test;
-import com.mkyong.test.core.TesterInfo;
+public class Runner {
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
+    public static void run(String path) {
+        Reflections reflections = new Reflections(path);
+        reflections.getTypesAnnotatedWith(TesterInfo.class).stream().forEach(Runner::testClass);
+    }
 
-        System.out.println("Testing...");
+    public static void run() {
+        run("");
+    }
 
+    private static void testClass(Class obj) {
+        System.out.println("Testing: " + obj.getName());
         int passed = 0, failed = 0, count = 0, ignore = 0;
-
-        Class<TestExample> obj = TestExample.class;
-
-        // Process @TesterInfo
         if (obj.isAnnotationPresent(TesterInfo.class)) {
-
             Annotation annotation = obj.getAnnotation(TesterInfo.class);
             TesterInfo testerInfo = (TesterInfo) annotation;
-
             System.out.printf("%nPriority :%s", testerInfo.priority());
             System.out.printf("%nCreatedBy :%s", testerInfo.createdBy());
             System.out.printf("%nTags :");
-
             int tagLength = testerInfo.tags().length;
             for (String tag : testerInfo.tags()) {
                 if (tagLength > 1) {
@@ -40,23 +35,13 @@ public class App
                 }
                 tagLength--;
             }
-
             System.out.printf("%nLastModified :%s%n%n", testerInfo.lastModified());
-
         }
-
-        // Process @Test
         for (Method method : obj.getDeclaredMethods()) {
-
-            // if method is annotated with @Test
             if (method.isAnnotationPresent(Test.class)) {
-
                 Annotation annotation = method.getAnnotation(Test.class);
                 Test test = (Test) annotation;
-
-                // if enabled = true (default)
                 if (test.enabled()) {
-
                     try {
                         method.invoke(obj.newInstance());
                         System.out.printf("%s - Test '%s' - passed %n", ++count, method.getName());
@@ -65,15 +50,13 @@ public class App
                         System.out.printf("%s - Test '%s' - failed: %s %n", ++count, method.getName(), ex.getCause());
                         failed++;
                     }
-
                 } else {
                     System.out.printf("%s - Test '%s' - ignored%n", ++count, method.getName());
                     ignore++;
                 }
-
             }
-
         }
         System.out.printf("%nResult : Total : %d, Passed: %d, Failed %d, Ignore %d%n", count, passed, failed, ignore);
     }
+
 }
