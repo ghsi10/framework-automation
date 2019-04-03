@@ -1,6 +1,5 @@
-package com.automaion.test.core;
+package com.automation.test.core;
 
-import com.automaion.test.App;
 import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
@@ -18,7 +17,7 @@ public class Runner {
     }
 
     private static void testClass(Class obj) {
-        System.out.println("Testing: " + obj.getName());
+        System.out.println("Testing: " + obj.getSimpleName());
         int passed = 0, failed = 0, count = 0, ignore = 0;
         if (obj.isAnnotationPresent(TesterInfo.class)) {
             Annotation annotation = obj.getAnnotation(TesterInfo.class);

@@ -1,10 +1,10 @@
-package com.automaion.test;
+package com.automation.test;
 
-import com.automaion.test.core.Runner;
+import com.automation.test.core.Runner;
 
 public class App {
 
     public static void main(String[] args) {
-        Runner.run();
+        Runner.run("com.automation.test");
     }
 }

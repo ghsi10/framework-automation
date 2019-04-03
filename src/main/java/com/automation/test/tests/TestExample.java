@@ -1,8 +1,8 @@
-package com.automaion.test.tests;
+package com.automation.test.tests;
 
-import com.automaion.test.core.Test;
-import com.automaion.test.core.TesterInfo;
-import com.automaion.test.core.TesterInfo.Priority;
+import com.automation.test.core.Test;
+import com.automation.test.core.TesterInfo;
+import com.automation.test.core.TesterInfo.Priority;
 
 @TesterInfo(
         priority = Priority.HIGH,
